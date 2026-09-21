@@ -7,6 +7,7 @@ import numpy as np
 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load model
 model = tf.keras.models.load_model("lstm_model.keras")
@@ -26,7 +27,13 @@ app = FastAPI(
     version="1.0"
 )
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or replace * with your portfolio URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class TextRequest(BaseModel):
     text: str
 
